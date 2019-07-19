@@ -4,10 +4,10 @@
       蘑菇在线后台管理系统
     </h3>
     <el-form-item prop="username">
-      <el-input v-model="ruleForm.username" />
+      <el-input prefix-icon="iconfont icon-login_user" v-model="ruleForm.username" />
     </el-form-item>
     <el-form-item prop="password">
-      <el-input v-model="ruleForm.password" type="password" />
+      <el-input prefix-icon="iconfont icon-login_password" v-model="ruleForm.password" type="password" />
     </el-form-item>
     <el-form-item style="width:100%;">
       <el-button
