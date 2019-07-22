@@ -52,3 +52,38 @@ module.exports = {
 </style>
 ```
 
+### 嵌套路由
+
+> 参考：https://zh.nuxtjs.org/api/components-nuxt-child/
+
+### 导航守卫
+
+#### 步骤：
+
+```javascript
+1、在 plugins 新建一个 router.js 的文件，并且写好导航守卫的代码
+    export default ({ app }) => {
+        app.router.beforeEach((to, from, next) => {
+            console.log(to.path)
+            console.log(next)
+        })
+    }
+
+2、在 nuxt.config.js 中的 `plugins` 导入 router.js 文件
+	plugins: ['@/plugins/element-ui', '~/plugins/router']
+```
+
+### 权限校验
+
+> 注意：nuxt是服务端渲染，在导航守卫中获取不到 `window`
+>
+> https://www.zhangyangjun.com/post/vue-ssr-and-nuxt-actual-combat.html
+
+#### 步骤：
+
+```
+
+```
+
+
+

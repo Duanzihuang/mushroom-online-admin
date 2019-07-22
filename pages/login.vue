@@ -4,10 +4,10 @@
       蘑菇在线后台管理系统
     </h3>
     <el-form-item prop="username">
-      <el-input prefix-icon="iconfont icon-login_user" v-model="ruleForm.username" />
+      <el-input v-model="ruleForm.username" prefix-icon="iconfont icon-login_user" />
     </el-form-item>
     <el-form-item prop="password">
-      <el-input prefix-icon="iconfont icon-login_password" v-model="ruleForm.password" type="password" />
+      <el-input v-model="ruleForm.password" prefix-icon="iconfont icon-login_password" type="password" />
     </el-form-item>
     <el-form-item style="width:100%;">
       <el-button
@@ -23,6 +23,7 @@
 </template>
 
 <script>
+import { mapMutations } from 'vuex'
 import md5 from '../utils/md5'
 export default {
   data() {
@@ -51,6 +52,9 @@ export default {
     }
   },
   methods: {
+    ...mapMutations({
+      setToken: 'user/setToken'
+    }),
     login() {
       this.$refs.ruleForm.validate(async (valid) => {
         if (valid) {
@@ -65,8 +69,11 @@ export default {
           if (res.data.status !== 0) {
             this.$message.error(res.data.message)
           } else {
-            // 把token 保存到本地
-            localStorage.setItem('token', res.data.token)
+            // 保存到store中
+            this.setToken(res.data.token)
+
+            // 把token 保存到cookies中
+            this.$cookies.set('token', res.data.token)
 
             // 进行路由跳转
             this.$router.push('/layout')

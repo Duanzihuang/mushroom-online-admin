@@ -9,35 +9,38 @@
         text-color="#fff"
         active-text-color="#ffd04b"
         :collapse="isCollapse"
+        unique-opened
+        router
+        :default-active="active"
       >
-        <el-submenu index="1">
+        <el-submenu index="/">
           <template slot="title">
-            <i class="el-icon-location"></i>
+            <i class="el-icon-location" />
             <span slot="title">用户管理</span>
           </template>
-          <el-menu-item index="1-1">
-            <i class="el-icon-menu"></i>用户列表
+          <el-menu-item index="/layout/user/list">
+            <i class="el-icon-menu" />用户列表
           </el-menu-item>
         </el-submenu>
         <el-submenu index="2">
           <template slot="title">
-            <i class="el-icon-location"></i>
+            <i class="el-icon-location" />
             <span slot="title">课程管理</span>
           </template>
-          <el-menu-item index="2-1">
-            <i class="el-icon-menu"></i>课程列表
+          <el-menu-item index="/layout/course/list">
+            <i class="el-icon-menu" />课程列表
           </el-menu-item>
-          <el-menu-item index="2-2">
-            <i class="el-icon-menu"></i>视频列表
+          <el-menu-item index="/layout/video/list">
+            <i class="el-icon-menu" />视频列表
           </el-menu-item>
         </el-submenu>
         <el-submenu index="3">
           <template slot="title">
-            <i class="el-icon-location"></i>
+            <i class="el-icon-location" />
             <span slot="title">订单管理</span>
           </template>
-          <el-menu-item index="3-1">
-            <i class="el-icon-menu"></i>订单列表
+          <el-menu-item index="/layout/order/list">
+            <i class="el-icon-menu" />订单列表
           </el-menu-item>
         </el-submenu>
       </el-menu>
@@ -46,15 +49,19 @@
       <el-header>
         <!-- 菜单图标 -->
         <i
-          @click="toggleMenu"
           :class="['iconfont icon-left-indent',isCollapse ? 'my-menu-active' : 'my-menu']"
-        ></i>
+          @click="toggleMenu"
+        />
         <!-- 标题 -->
-        <div class="stitle">蘑菇在线后台管理系统</div>
+        <div class="stitle">
+          蘑菇在线后台管理系统
+        </div>
         <!-- 退出的链接 -->
         <a href="javascript:;" class="logoutbtn">退出</a>
       </el-header>
-      <el-main>内容区域</el-main>
+      <el-main>
+        <nuxt-child />
+      </el-main>
     </el-container>
   </el-container>
 </template>
@@ -63,8 +70,12 @@
 export default {
   data() {
     return {
-      isCollapse: false
+      isCollapse: false, // 是否收缩
+      active: '/layout/course/list' // 当前激活的路由
     }
+  },
+  created() {
+    this.active = this.$route.fullPath
   },
   methods: {
     // 左边菜单的展开和收起
@@ -103,8 +114,8 @@ export default {
 .el-main {
   background-color: #e9eef3;
   color: #333;
-  text-align: center;
-  line-height: 160px;
+  // text-align: center;
+  // line-height: 160px;
 }
 
 body > .el-container {

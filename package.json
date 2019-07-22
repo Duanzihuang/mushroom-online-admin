@@ -23,7 +23,8 @@
     "mysql": "^2.17.1",
     "node-sass": "^4.12.0",
     "nuxt": "^2.0.0",
-    "sass-loader": "^7.1.0"
+    "sass-loader": "^7.1.0",
+    "vue-cookies": "^1.5.13"
   },
   "devDependencies": {
     "@nuxtjs/eslint-config": "^0.0.1",
