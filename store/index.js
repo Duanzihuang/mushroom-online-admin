@@ -6,7 +6,7 @@ import user from './moduels/user'
 
 Vue.use(Vuex)
 
-const noNeedValidateRightURLS = ['/login', '/index']
+// const noNeedValidateRightURLS = ['/login', '/index']
 
 export default () =>
   new Store({
@@ -14,15 +14,10 @@ export default () =>
       user
     },
     actions: {
-      nuxtServerInit({ commit }, { app, req }) {
-        const path = app.context.route.path
-        if (!noNeedValidateRightURLS.includes(path)) {
-          if (req.headers.cookie) {
-            const cookies = req.headers.cookie.split('=')
-            commit('user/setToken', cookies[1])
-          } else {
-            app.router.push('/login')
-          }
+      nuxtServerInit({ commit }, { req }) {
+        if (req.session && req.session.token) {
+          commit('user/setToken', req.session.token)
+          commit('user/setUser', req.session.user)
         }
       }
     }

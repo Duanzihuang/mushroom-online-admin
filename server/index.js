@@ -3,11 +3,30 @@ const Koa = require('koa')
 const consola = require('consola')
 const { Nuxt, Builder } = require('nuxt')
 const koaBody = require('koa-body')
+const session = require('koa-session')
 
 // 导入路由中间件
 const adminRouter = require(path.join(__dirname, './router/admin.js'))
 
 const app = new Koa()
+
+app.keys = ['some secret hurr']
+
+const CONFIG = {
+  key: 'koa:sess', /** (string) cookie key (default is koa:sess) */
+  /** (number || 'session') maxAge in ms (default is 1 days) */
+  /** 'session' will result in a cookie that expires when session/browser is closed */
+  /** Warning: If a session cookie is stolen, this cookie will never expire */
+  maxAge: 86400000,
+  autoCommit: true, /** (boolean) automatically commit headers (default true) */
+  overwrite: true, /** (boolean) can overwrite or not (default true) */
+  httpOnly: true, /** (boolean) httpOnly or not (default true) */
+  signed: true, /** (boolean) signed or not (default true) */
+  rolling: false, /** (boolean) Force a session identifier cookie to be set on every response. The expiration is reset to the original maxAge, resetting the expiration countdown. (default is false) */
+  renew: false /** (boolean) renew session when session is nearly expired, so we can always keep user logged in. (default is false) */
+}
+
+app.use(session(CONFIG, app))
 
 // Import and Set Nuxt.js options
 const config = require('../nuxt.config.js')
@@ -50,6 +69,9 @@ async function start() {
     .use(adminRouter.allowedMethods())
 
   app.use((ctx) => {
+    // 在将 nuxt.render 注入的时候，将 session 添加进 request 中
+    // 参考：https://www.jb51.net/article/139804.htm
+    ctx.req.session = ctx.session
     ctx.status = 200
     ctx.respond = false // Bypass Koa's built-in response handling
     ctx.req.ctx = ctx // This might be useful later on, e.g. in nuxtServerInit or with nuxt-stash

@@ -7,7 +7,11 @@
       <el-input v-model="ruleForm.username" prefix-icon="iconfont icon-login_user" />
     </el-form-item>
     <el-form-item prop="password">
-      <el-input v-model="ruleForm.password" prefix-icon="iconfont icon-login_password" type="password" />
+      <el-input
+        v-model="ruleForm.password"
+        prefix-icon="iconfont icon-login_password"
+        type="password"
+      />
     </el-form-item>
     <el-form-item style="width:100%;">
       <el-button
@@ -53,7 +57,8 @@ export default {
   },
   methods: {
     ...mapMutations({
-      setToken: 'user/setToken'
+      setToken: 'user/setToken',
+      setUser: 'user/setUser'
     }),
     login() {
       this.$refs.ruleForm.validate(async (valid) => {
@@ -71,9 +76,10 @@ export default {
           } else {
             // 保存到store中
             this.setToken(res.data.token)
+            this.setUser(res.data.user)
 
             // 把token 保存到cookies中
-            this.$cookies.set('token', res.data.token)
+            // this.$cookies.set('token', res.data.token)
 
             // 进行路由跳转
             this.$router.push('/layout')

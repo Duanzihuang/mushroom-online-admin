@@ -57,7 +57,7 @@
           蘑菇在线后台管理系统
         </div>
         <!-- 退出的链接 -->
-        <a href="javascript:;" class="logoutbtn">退出</a>
+        <a href="javascript:void(0);" class="logoutbtn" @click="logout">退出</a>
       </el-header>
       <el-main>
         <nuxt-child />
@@ -67,7 +67,9 @@
 </template>
 
 <script>
+import { mapMutations } from 'vuex'
 export default {
+  middleware: 'auth',
   data() {
     return {
       isCollapse: false, // 是否收缩
@@ -78,9 +80,37 @@ export default {
     this.active = this.$route.fullPath
   },
   methods: {
+    ...mapMutations({
+      setToken: 'user/setToken',
+      setUser: 'user/setUser'
+    }),
     // 左边菜单的展开和收起
     toggleMenu() {
       this.isCollapse = !this.isCollapse
+    },
+    // 退出登录
+    logout() {
+      this.$confirm('确认退出吗?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      })
+        .then(async () => {
+          const res = await this.$axios.get('/admin/user/logout')
+          if (res.data.status === 0) {
+            this.$message({
+              type: 'success',
+              message: res.data.message
+            })
+
+            // 清空store/user中的state数据
+            this.setToken(null)
+            this.setUser(null)
+
+            this.$router.push('/login')
+          }
+        })
+        .catch(() => {})
     }
   }
 }

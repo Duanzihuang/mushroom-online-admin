@@ -78,11 +78,13 @@ module.exports = {
 > 注意：nuxt是服务端渲染，在导航守卫中获取不到 `window`
 >
 > https://www.zhangyangjun.com/post/vue-ssr-and-nuxt-actual-combat.html
+>
+> 使用前后端配合的方式来实现路由
 
 #### 步骤：
 
 ```
-
+参考：https://www.jb51.net/article/139804.htm
 ```
 
 
