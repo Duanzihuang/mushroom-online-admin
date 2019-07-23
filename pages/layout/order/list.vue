@@ -50,7 +50,7 @@
 </template>
 
 <script>
-import axios from 'axios'
+import myAxios from '@/common/myAxios'
 export default {
   data() {
     return {
@@ -62,7 +62,7 @@ export default {
     }
   },
   async asyncData() {
-    const res = await axios.get('http://localhost:3000/admin/order/list', {
+    const res = await myAxios.get('order/list', {
       params: {
         keyword: '',
         pageIndex: 1,

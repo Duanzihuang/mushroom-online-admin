@@ -8,6 +8,7 @@ const session = require('koa-session')
 // 导入路由中间件
 const adminRouter = require(path.join(__dirname, './router/admin.js'))
 const orderRouter = require(path.join(__dirname, './router/order.js'))
+const courseRouter = require(path.join(__dirname, './router/course.js'))
 
 const app = new Koa()
 
@@ -71,6 +72,9 @@ async function start() {
 
   app.use(orderRouter.routes())
     .use(orderRouter.allowedMethods())
+
+  app.use(courseRouter.routes())
+    .use(courseRouter.allowedMethods())
 
   app.use((ctx) => {
     // 在将 nuxt.render 注入的时候，将 session 添加进 request 中
