@@ -22,7 +22,7 @@
     "koa-router": "^7.4.0",
     "koa-session": "^5.12.2",
     "mysql": "^2.17.1",
-    "node-sass": "^4.12.0",
+    "node-sass": "^7.0.0",
     "nuxt": "^2.0.0",
     "sass-loader": "^7.1.0",
     "vue-cookies": "^1.5.13"
